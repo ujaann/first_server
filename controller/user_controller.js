@@ -7,20 +7,59 @@ const findAll = async (req, res) => {
         res.status(200).json(users);
     }
     catch (e) {
-        res.json(e);
+        res.status(500).json(e);
     }
 }
 
 
 const save = async (req, res) => {
+    console.log(req);
+
     try {
+        console.log(req.body);
         const user = new User(req.body);
         user.save();
         res.status(201).json(user);
     }
     catch (e) {
-        res.json(e);
+        res.status(500).json(e);
     }
 }
 
-module.exports = {findAll,save};
+
+const update = async (req, res) => {
+    try {
+        const { params, body } = req;
+        const userId = params.id;
+        const user = await User.findById(userId);
+        user.name = body.name;
+        user.age = body.age;
+        user.isNew = false;
+        await user.save();
+        res.status(201).json(user);
+    } catch (e) {
+        res.status(500).json(e);
+    }
+}
+
+const getById=async (req,res) => {
+    try{
+        const {id}=req.params;
+        const user=await User.findById(id);
+        res.status(200).json(user);
+    }catch(e){
+        res.status(500).json(e);
+    }
+}
+
+const deleteById=async function (req,res) {
+    try{
+        const {id}=req.params;
+        const user=await User.findByIdAndDelete(id);
+        res.status(200).json(user);
+    }catch(e){
+        res.status(500).json(e);
+    }
+}
+
+module.exports = { findAll, save, update,getById ,deleteById};

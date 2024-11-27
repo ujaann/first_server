@@ -1,10 +1,16 @@
 const express=require('express');
-const {findAll,save}= require('../controller/user_controller');
+const {findAll,save, update, getById, deleteById}= require('../controller/user_controller');
 const router=express.Router();
 
 
 router.get('/',findAll);
 
 router.post('/',save);
+
+router.put('/:id',update);
+
+router.get('/:id',getById);
+
+router.delete('/:id',deleteById);
 
 module.exports=router;
