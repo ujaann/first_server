@@ -1,11 +1,12 @@
 const express=require('express');
 const {findAll,save, update, getById, deleteById}= require('../controller/user_controller');
+const userValidation = require('../validation/user_validation');
 const router=express.Router();
 
 
-router.get('/',findAll);
+router.get('/',findAll); 
 
-router.post('/',save);
+router.post('/',userValidation,save);
 
 router.put('/:id',update);
 
