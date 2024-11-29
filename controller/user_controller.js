@@ -13,13 +13,12 @@ const findAll = async (req, res) => {
 
 
 const save = async (req, res) => {
-    console.log(req);
 
     try {
-        console.log(req.body);
+        // console.log(req.body);
         const user = new User(req.body);
-        user.save();
-        res.status(201).json(user);
+        const data=await user.save();
+        res.status(201).json(data);
     }
     catch (e) {
         res.status(500).json(e);
